@@ -73,11 +73,17 @@ struct ar0820 {
 	struct tegracam_device		*tc_dev;
 };
 
+static bool volatile_reg(struct device *dev, unsigned int reg) {
+	return true;
+}
+
+
 static const struct regmap_config sensor_regmap_config = {
 	.reg_bits = 16,
 	.val_bits = 16,
 	.cache_type = REGCACHE_RBTREE,
 	.use_single_rw = true,
+	.volatile_reg = volatile_reg
 };
 
 static inline void ar0820_get_frame_length_regs(ar0820_reg *regs,
@@ -706,7 +712,13 @@ static int ar0820_start_streaming(struct tegracam_device *tc_dev)
 	if (err)
 		goto exit;
 
-	return ar0820_write_table(priv, mode_table[AR0820_START_STREAM]);
+
+
+	err = ar0820_write_table(priv, mode_table[AR0820_START_STREAM]);
+	if (err)
+		return err;
+
+	dev_dbg(dev, "%s starting streaming\n", __func__);
 
 	msleep(20);
 
