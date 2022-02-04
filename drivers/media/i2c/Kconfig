@@ -37,15 +37,6 @@ config VIDEO_MAX929X
 	---help---
 	  This driver supports MAX929X GMSL2.
 
-config VIDEO_AR0820
-        tristate "AR0820 camera sensor support"
-	depends on I2C && VIDEO_V4L2 && VIDEO_V4L2_SUBDEV_API && VIDEO_MAX929X
-	---help---
-	  This driver supports AR0820 camera sensor from Sony
-
-	  To compile this driver as a module, choose M here: the module
-	  will be called ar0820.
-
 config VIDEO_IMX268
 	tristate "IMX268 camera sensor support"
 	depends on I2C && VIDEO_V4L2 && VIDEO_V4L2_SUBDEV_API
@@ -179,6 +170,16 @@ config VIDEO_IMX390
 
 	  To compile this driver as a module, choose M here: the module
 	  will be called imx390.
+
+config VIDEO_AR0820
+	tristate "AR0820 camera sensor support"
+	depends on I2C && VIDEO_V4L2 && VIDEO_V4L2_SUBDEV_API && I2C_IOEXPANDER_SER_MAX9295 && I2C_IOEXPANDER_DESER_MAX9296
+	---help---
+	  This is a Video4Linux2 sensor-level driver for the On Semi
+	  AR0820 camera sensor
+
+	  To compile this driver as a module, choose M here: the module
+	  will be called AR0820.
 
 endmenu
 
