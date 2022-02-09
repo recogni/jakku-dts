@@ -87,11 +87,6 @@ static int mipi_dgram_write_reg_u8(struct camera_common_data *s_data,
     return 0;
 }
 
-static int mipi_dgram_write_table(struct mipi_dgram *priv, const mipi_dgram_reg table[])
-{
-    return 0;
-}
-
 static struct mutex serdes_lock__;
 
 extern int max9295_write_reg(struct device *dev, u16 addr, u8 val);
@@ -199,7 +194,7 @@ static int mipi_dgram_power_put(struct tegracam_device *tc_dev)
 
 static int mipi_dgram_power_get(struct tegracam_device *tc_dev)
 {
-    return;
+    return 0;
 }
 
 static struct camera_common_pdata *mipi_dgram_parse_dt(
@@ -207,12 +202,8 @@ static struct camera_common_pdata *mipi_dgram_parse_dt(
 {
     struct device *dev = tc_dev->dev;
     struct device_node *np = dev->of_node;
-    struct mipi_dgram *priv;
     struct camera_common_pdata *board_priv_pdata;
     const struct of_device_id *match;
-    struct camera_common_pdata *ret = NULL;
-    int err = 0;
-    int gpio;
 
     if (!np)
         return NULL;
@@ -228,8 +219,6 @@ static struct camera_common_pdata *mipi_dgram_parse_dt(
                                     sizeof(*board_priv_pdata), GFP_KERNEL);
     if (!board_priv_pdata)
         return NULL;
-
-    mipi_dgram_priv = (struct mipi_dgram *)tegracam_get_privdata(tc_dev);
 
     return board_priv_pdata;
 }
@@ -270,7 +259,7 @@ exit:
 
 static int mipi_dgram_stop_streaming(struct tegracam_device *tc_dev)
 {
-    int err;
+    int err = 0;
     struct device *dev = tc_dev->dev;
     struct mipi_dgram *priv = (struct mipi_dgram *)tegracam_get_privdata(tc_dev);
 
@@ -283,8 +272,6 @@ static int mipi_dgram_stop_streaming(struct tegracam_device *tc_dev)
 }
 
 static struct camera_common_sensor_ops mipi_dgram_common_ops = {
-    .numfrmfmts = ARRAY_SIZE(mipi_dgram_frmfmt),
-    .frmfmt_table = mipi_dgram_frmfmt,
     .power_on = mipi_dgram_power_on,
     .power_off = mipi_dgram_power_off,
     .write_reg = mipi_dgram_write_reg_u8,
@@ -567,7 +554,6 @@ static int mipi_dgram_probe(struct i2c_client *client,
     priv->i2c_client = tc_dev->client = client;
     tc_dev->dev = dev;
     strncpy(tc_dev->name, "mipi_dgram", sizeof(tc_dev->name));
-    tc_dev->dev_regmap_config = &sensor_regmap_config;
     tc_dev->sensor_ops = &mipi_dgram_common_ops;
     tc_dev->v4l2sd_internal_ops = &mipi_dgram_subdev_internal_ops;
     tc_dev->tcctrl_ops = &mipi_dgram_ctrl_ops;
@@ -630,20 +616,6 @@ static int mipi_dgram_probe(struct i2c_client *client,
         dev_err(&client->dev,
                 "%s gmsl serdes setup failed\n", __func__);
         return err;
-    }
-
-    /* Try to read the part ID */
-    {
-        unsigned int chip_id;
-        err = regmap_read(priv->s_data->regmap, 0x3000, &chip_id);
-        if (err)
-        {
-            tegracam_device_unregister(tc_dev);
-            dev_err(dev, "unable to read sensor chip revision\n");
-            return err;
-        }
-
-        dev_err(dev, "Read sensor chip ID %x\n", chip_id);
     }
 
     err = tegracam_v4l2subdev_register(tc_dev, true);
