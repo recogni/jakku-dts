@@ -181,6 +181,16 @@ config VIDEO_AR0820
 	  To compile this driver as a module, choose M here: the module
 	  will be called AR0820.
 
+config VIDEO_MIPI_DGRAM
+	tristate "MIPI datagram pseudo camera sensor support"
+	depends on I2C && VIDEO_V4L2 && VIDEO_V4L2_SUBDEV_API && I2C_IOEXPANDER_SER_MAX9295 && I2C_IOEXPANDER_DESER_MAX9296
+	---help---
+	  This is a Video4Linux2 sensor-level driver for the MIPI
+	  datagram pseudo camera sensor
+
+	  To compile this driver as a module, choose M here: the module
+	  will be called mipi_dram.
+
 endmenu
 
 endif
