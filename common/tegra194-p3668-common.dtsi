@@ -1,4 +1,5 @@
 /*
+ * Copyright (c) 2020, Leopard Imaging Inc.  All rights reserved.
  * Common include DTS file for CVM:P3668-0001 and CVB:P3449-0000 variants.
  *
  * Copyright (c) 2019-2020 , NVIDIA CORPORATION.  All rights reserved.
@@ -124,7 +125,8 @@
 
 		ports {
 			usb2-0 {
-				mode = "otg";
+				mode = "host";
+				vbus-supply = <&battery_reg>;
 				status = "okay";
 			};
 			usb2-1 {
@@ -315,7 +317,7 @@
 			output-high;
 			gpios = <TEGRA194_AON_GPIO(CC, 0) GPIO_ACTIVE_LOW>;
 			label = "w-disable2";
-			status = "okay";
+			status = "disabled";
 		};
 		suspend_gpio: suspend-led-gpio {
 			gpio-hog;
