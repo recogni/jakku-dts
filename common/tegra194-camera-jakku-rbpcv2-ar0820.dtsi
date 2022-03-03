@@ -56,24 +56,15 @@
 					max-src = <2>;
 					// reset-gpios = <&tegra_main_gpio CAM0_RST_L GPIO_ACTIVE_HIGH>;
 				};
-				ser_prim: max9295_prim@62 {
+
+				ser_a: max9295_a@62 {
 					compatible = "nvidia,max9295";
 					reg = <0x62>;
-					is-prim-ser;
-				};
-				ser_a: max9295_a@40 {
-					compatible = "nvidia,max9295";
-					reg = <0x40>;
 					nvidia,gmsl-prim-ser-device = <&ser_prim>;
 					nvidia,gmsl-dser-device = <&dser>;
 				};
-				ser_b: max9295_b@60 {
-					compatible = "nvidia,max9295";
-					reg = <0x60>;
-					nvidia,gmsl-prim-ser-device = <&ser_prim>;
-					nvidia,gmsl-dser-device = <&dser>;
-				};
-				ar0820_a@1b {
+
+				ar0820_a@10 {
 					def-addr = <0x10>;
 					/* Define any required hw resources needed by driver */
 					/* ie. clocks, io pins, power sources */
@@ -83,125 +74,6 @@
 					mclk = "extperiph1";
 					nvidia,gmsl-ser-device = <&ser_a>;
 					nvidia,gmsl-dser-device = <&dser>;
-				};
-				ar0820_b@1c {
-					def-addr = <0x10>;
-					/* Define any required hw resources needed by driver */
-					/* ie. clocks, io pins, power sources */
-					clocks = <&bpmp_clks TEGRA194_CLK_EXTPERIPH1>,
-							<&bpmp_clks TEGRA194_CLK_PLLP_OUT0>;
-					clock-names = "extperiph1", "pllp_grtba";
-					mclk = "extperiph1";
-					nvidia,gmsl-ser-device = <&ser_b>;
-					nvidia,gmsl-dser-device = <&dser>;
-				};
-			};
-
-			i2c@1 {
-				reg = <1>;
-				i2c-mux,deselect-on-exit;
-				#address-cells = <1>;
-				#size-cells = <0>;
-
-				dser_cd: max9296@48 {
-					compatible = "nvidia,max9296";
-					reg = <0x48>;
-					csi-mode = "2x4";
-					max-src = <2>;
-					// reset-gpios = <&tegra_main_gpio CAM0_RST_L GPIO_ACTIVE_HIGH>;
-				};
-				ser_prim_cd: max9295_prim@62 {
-					compatible = "nvidia,max9295";
-					reg = <0x62>;
-					is-prim-ser;
-				};
-				ser_c: max9295_c@40 {
-					compatible = "nvidia,max9295";
-					reg = <0x40>;
-					nvidia,gmsl-prim-ser-device = <&ser_prim_cd>;
-					nvidia,gmsl-dser-device = <&dser_cd>;
-				};
-				ser_d: max9295_d@60 {
-					compatible = "nvidia,max9295";
-					reg = <0x60>;
-					nvidia,gmsl-prim-ser-device = <&ser_prim_cd>;
-					nvidia,gmsl-dser-device = <&dser_cd>;
-				};
-				ar0820_c@1b {
-					def-addr = <0x10>;
-					/* Define any required hw resources needed by driver */
-					/* ie. clocks, io pins, power sources */
-					clocks = <&bpmp_clks TEGRA194_CLK_EXTPERIPH1>,
-							<&bpmp_clks TEGRA194_CLK_PLLP_OUT0>;
-					clock-names = "extperiph1", "pllp_grtba";
-					mclk = "extperiph1";
-					nvidia,gmsl-ser-device = <&ser_c>;
-					nvidia,gmsl-dser-device = <&dser_cd>;
-				};
-				ar0820_d@1c {
-					def-addr = <0x10>;
-					/* Define any required hw resources needed by driver */
-					/* ie. clocks, io pins, power sources */
-					clocks = <&bpmp_clks TEGRA194_CLK_EXTPERIPH1>,
-							<&bpmp_clks TEGRA194_CLK_PLLP_OUT0>;
-					clock-names = "extperiph1", "pllp_grtba";
-					mclk = "extperiph1";
-					nvidia,gmsl-ser-device = <&ser_d>;
-					nvidia,gmsl-dser-device = <&dser_cd>;
-				};
-			};
-
-			i2c@2 {
-				reg = <2>;
-				i2c-mux,deselect-on-exit;
-				#address-cells = <1>;
-				#size-cells = <0>;
-
-				dser_ef: max9296@48 {
-					compatible = "nvidia,max9296";
-					reg = <0x48>;
-					csi-mode = "2x4";
-					max-src = <2>;
-					// reset-gpios = <&tegra_main_gpio CAM0_RST_L GPIO_ACTIVE_HIGH>;
-				};
-				ser_prim_ef: max9295_prim@62 {
-					compatible = "nvidia,max9295";
-					reg = <0x62>;
-					is-prim-ser;
-				};
-				ser_e: max9295_e@40 {
-					compatible = "nvidia,max9295";
-					reg = <0x40>;
-					nvidia,gmsl-prim-ser-device = <&ser_prim_ef>;
-					nvidia,gmsl-dser-device = <&dser_ef>;
-				};
-				ser_f: max9295_f@60 {
-					compatible = "nvidia,max9295";
-					reg = <0x60>;
-					nvidia,gmsl-prim-ser-device = <&ser_prim_ef>;
-					nvidia,gmsl-dser-device = <&dser_ef>;
-				};
-				ar0820_e@1b {
-					def-addr = <0x10>;
-					/* Define any required hw resources needed by driver */
-					/* ie. clocks, io pins, power sources */
-					clocks = <&bpmp_clks TEGRA194_CLK_EXTPERIPH1>,
-							<&bpmp_clks TEGRA194_CLK_PLLP_OUT0>;
-					clock-names = "extperiph1", "pllp_grtba";
-					mclk = "extperiph1";
-					nvidia,gmsl-ser-device = <&ser_e>;
-					nvidia,gmsl-dser-device = <&dser_ef>;
-				};
-				ar0820_f@1c {
-					def-addr = <0x10>;
-					/* Define any required hw resources needed by driver */
-					/* ie. clocks, io pins, power sources */
-					clocks = <&bpmp_clks TEGRA194_CLK_EXTPERIPH1>,
-							<&bpmp_clks TEGRA194_CLK_PLLP_OUT0>;
-					clock-names = "extperiph1", "pllp_grtba";
-					mclk = "extperiph1";
-					nvidia,gmsl-ser-device = <&ser_f>;
-					nvidia,gmsl-dser-device = <&dser_ef>;
 				};
 			};
 		};
