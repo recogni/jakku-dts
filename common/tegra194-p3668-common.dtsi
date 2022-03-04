@@ -314,10 +314,10 @@
 		};
 		w-disable2 {
 			gpio-hog;
-			output-high;
+			output-low;
 			gpios = <TEGRA194_AON_GPIO(CC, 0) GPIO_ACTIVE_LOW>;
 			label = "w-disable2";
-			status = "disabled";
+			status = "okay";
 		};
 		suspend_gpio: suspend-led-gpio {
 			gpio-hog;

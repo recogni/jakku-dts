@@ -53,14 +53,14 @@
 					compatible = "nvidia,max9296";
 					reg = <0x48>;
 					csi-mode = "2x4";
-					max-src = <2>;
+					max-src = <1>;
 					// reset-gpios = <&tegra_main_gpio CAM0_RST_L GPIO_ACTIVE_HIGH>;
 				};
 
 				ser_a: max9295_a@62 {
 					compatible = "nvidia,max9295";
 					reg = <0x62>;
-					nvidia,gmsl-prim-ser-device = <&ser_prim>;
+					nvidia,gmsl-prim-ser-device = <&ser_a>;
 					nvidia,gmsl-dser-device = <&dser>;
 				};
 
